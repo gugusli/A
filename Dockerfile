@@ -1,13 +1,13 @@
-FROM dunglas/frankenphp:latest-php8.3
+FROM php:8.3-apache
 
-RUN install-php-extensions pdo_pgsql mbstring curl zip
+RUN apt-get update && apt-get install -y libpq-dev curl zip unzip \
+    && docker-php-ext-install pdo pdo_pgsql \
+    && a2enmod rewrite
 
-WORKDIR /app
+WORKDIR /var/www/html
 COPY . .
 
 RUN curl -sS https://getcomposer.org/installer | php && \
     COMPOSER_ALLOW_SUPERUSER=1 php composer.phar install --no-dev --optimize-autoloader
 
-EXPOSE 8080
-ENV SERVER_NAME=":8080"
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
+EXPOSE 80
