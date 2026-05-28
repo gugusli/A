@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["php81", "php81Extensions.pdo_pgsql", "php81Extensions.curl", "php81Extensions.mbstring"]
+nixPkgs = ["php", "phpExtensions.pdo_pgsql", "phpExtensions.curl", "phpExtensions.mbstring"]
 
 [phases.install]
 cmds = ["composer install --no-dev --optimize-autoloader"]
