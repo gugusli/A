@@ -1,12 +1,12 @@
 FROM dunglas/frankenphp:latest-php8.3
 
-RUN install-php-extensions pdo_pgsql mbstring curl
+RUN install-php-extensions pdo_pgsql mbstring curl zip
 
 WORKDIR /app
 COPY . .
 
 RUN curl -sS https://getcomposer.org/installer | php && \
-    php composer.phar install --no-dev --optimize-autoloader
+    COMPOSER_ALLOW_SUPERUSER=1 php composer.phar install --no-dev --optimize-autoloader
 
 EXPOSE 8080
 ENV SERVER_NAME=":8080"
